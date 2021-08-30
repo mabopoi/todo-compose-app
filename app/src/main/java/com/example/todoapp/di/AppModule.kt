@@ -2,7 +2,7 @@ package com.example.todoapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.todoapp.db.ToDoItemDatabase
+import com.example.todoapp.data.db.ToDoItemDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
