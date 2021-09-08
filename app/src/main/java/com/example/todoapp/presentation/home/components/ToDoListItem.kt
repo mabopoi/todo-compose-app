@@ -1,4 +1,4 @@
-package com.example.todoapp.ui.components
+package com.example.todoapp.presentation.home.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,7 +12,7 @@ import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.example.todoapp.models.ToDoItem
+import com.example.todoapp.domain.model.ToDoItem
 
 @Composable
 fun ToDoListItem(toDoItem: ToDoItem, onClick: () -> Unit) {

@@ -1,4 +1,4 @@
-package com.example.todoapp
+package com.example.todoapp.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,8 +7,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.todoapp.ui.Navigation
-import com.example.todoapp.ui.theme.TodoAppTheme
+import com.example.todoapp.presentation.ui.theme.TodoAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

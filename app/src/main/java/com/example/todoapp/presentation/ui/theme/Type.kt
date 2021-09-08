@@ -1,4 +1,4 @@
-package com.example.todoapp.ui.theme
+package com.example.todoapp.presentation.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

@@ -1,4 +1,4 @@
-package com.example.todoapp.ui
+package com.example.todoapp.presentation
 
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -13,7 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.todoapp.ui.presentation.HomeScreen
+import com.example.todoapp.presentation.home.HomeScreen
 
 @Composable
 fun Navigation() {
@@ -41,11 +41,11 @@ fun NavigationBar(
     backStackEntry: NavBackStackEntry?,
     navigateHome: () -> Unit
 ) {
-    var selected = backStackEntry?.destination?.route == "/"
+    val selected = backStackEntry?.destination?.route == "/"
     BottomNavigation {
         BottomNavigationItem(
             selected = selected,
-            onClick = { navigateHome },
+            onClick = { navigateHome() },
             selectedContentColor = Green,
             unselectedContentColor = Gray,
             icon = { Icons.Default.Home }
