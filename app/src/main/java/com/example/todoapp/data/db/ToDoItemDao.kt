@@ -1,8 +1,8 @@
 package com.example.todoapp.data.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.todoapp.domain.model.ToDoItem
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ToDoItemDao {
@@ -11,7 +11,7 @@ interface ToDoItemDao {
     suspend fun upsert(item: ToDoItem): Int
 
     @Query("SELECT * FROM todo_item")
-    fun observeAll() : LiveData<List<ToDoItem>>
+    fun observeAll() : Flow<List<ToDoItem>>
 
     @Delete
     suspend fun delete(item: ToDoItem)

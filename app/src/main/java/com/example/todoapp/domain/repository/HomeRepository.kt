@@ -1,10 +1,10 @@
 package com.example.todoapp.domain.repository
 
-import androidx.lifecycle.LiveData
 import com.example.todoapp.domain.model.ToDoItem
+import kotlinx.coroutines.flow.Flow
 
 interface HomeRepository {
-    fun getAllToDos(): LiveData<List<ToDoItem>>
+    fun getAllToDos(): Flow<List<ToDoItem>>
 
     suspend fun deleteToDo(item: ToDoItem)
 }

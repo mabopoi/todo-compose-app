@@ -2,7 +2,10 @@ package com.example.todoapp.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.todoapp.data.db.ToDoItemDao
 import com.example.todoapp.data.db.ToDoItemDatabase
+import com.example.todoapp.data.repository.HomeRepositoryImpl
+import com.example.todoapp.domain.repository.HomeRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,4 +28,7 @@ object AppModule {
         database: ToDoItemDatabase
     ) = database.toDoItemDao()
 
+    @Singleton
+    @Provides
+    fun provideHomeRepository(dao: ToDoItemDao): HomeRepository = HomeRepositoryImpl(dao)
 }
