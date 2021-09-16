@@ -9,6 +9,7 @@ import com.example.todoapp.domain.model.ToDoItem
 import com.example.todoapp.domain.use_case.get_todos.GetToDosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,17 +18,21 @@ class HomeViewModel @Inject constructor(
     private val getToDosUseCase: GetToDosUseCase
 ) : ViewModel() {
 
-    private val _toDosList =
-        mutableStateOf<List<ToDoItem>>(emptyList()) //must change to a Model State
-    val toDosList: State<List<ToDoItem>> = _toDosList // must change to a Model State
+    private val _state =
+        mutableStateOf(HomeState()) //must change to a Model State
+    val state: State<HomeState> = _state // must change to a Model State
 
-    fun getAllToDos() {
+    init {
+        getAllToDos()
+    }
+
+    private fun getAllToDos() {
         viewModelScope.launch {
             getToDosUseCase().collect { res ->
                 when (res) {
-                    is Resource.Success -> TODO()
-                    is Resource.Error -> TODO()
-                    is Resource.Loading -> TODO()
+                    is Resource.Success -> res.data?.onEach { _state.value = HomeState(list = it) }
+                    is Resource.Error -> _state.value = HomeState(error = res.message)
+                    is Resource.Loading -> _state.value = HomeState(isLoading = true)
                 }
             }
         }
