@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface ToDoItemDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsert(item: ToDoItem): Int
+    suspend fun upsert(item: ToDoItem): Long
 
     @Query("SELECT * FROM todo_item")
     fun observeAll() : Flow<List<ToDoItem>>
