@@ -6,7 +6,7 @@ import com.example.todoapp.domain.model.ToDoItem
 
 @Database(
     entities = [ToDoItem::class],
-    version = 1
+    version = 2
 )
 abstract class ToDoItemDatabase : RoomDatabase() {
 

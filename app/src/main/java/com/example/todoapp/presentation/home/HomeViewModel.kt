@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todoapp.common.Resource
 import com.example.todoapp.domain.model.ToDoItem
+import com.example.todoapp.domain.use_case.add_todo.AddToDoUseCase
 import com.example.todoapp.domain.use_case.get_todos.GetToDosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -16,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getToDosUseCase: GetToDosUseCase
+    private val getToDosUseCase: GetToDosUseCase,
+    private val addToDoUseCase: AddToDoUseCase
 ) : ViewModel() {
 
     private val _state =
@@ -37,6 +39,13 @@ class HomeViewModel @Inject constructor(
                     is Resource.Loading -> _state.value = HomeState(isLoading = true)
                 }
             }
+        }
+    }
+
+   fun addToDo(title: String, description: String){
+       val item = ToDoItem(title = title, description = description)
+        viewModelScope.launch {
+            addToDoUseCase(item)
         }
     }
 

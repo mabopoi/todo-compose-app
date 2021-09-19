@@ -9,9 +9,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.example.todoapp.domain.model.ToDoItem
 
 @Composable
 fun NewToDoDialog(
+    createToDo: (title: String, desc: String) -> Unit,
     setShowDialog: (Boolean) -> Unit
 ) {
     var title by remember { mutableStateOf("") }
@@ -34,14 +36,21 @@ fun NewToDoDialog(
                     value = description,
                     onValueChange = { value -> description = value })
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Button(onClick = { setShowDialog(false) }) {
                         Text(text = "Cancelar")
                     }
-                    Button(onClick = { /*TODO*/ }) {
+                    Button(onClick = {
+                        createToDo(title, description)
+                        setShowDialog(false)
+                        title = ""
+                        description = ""
+                    }) {
                         Text(text = "Agregar")
                     }
                 }

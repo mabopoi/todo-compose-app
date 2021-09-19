@@ -18,7 +18,7 @@ class GetToDosUseCase @Inject constructor(
             val listFlow = homeRepository.getAllToDos()
             emit(Resource.Success(data = listFlow))
         } catch (e: Exception) {
-            emit(Resource.Error<Flow<List<ToDoItem>>>(message = e.message ?: "Hubo un error"))
+            emit(Resource.Error<Flow<List<ToDoItem>>>(message = e.message ?: "There was an error"))
         }
     }
 

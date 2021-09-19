@@ -20,7 +20,8 @@ object AppModule {
     @Singleton
     @Provides
     fun provideToDoItemDatabase(@ApplicationContext context: Context) =
-        Room.databaseBuilder(context, ToDoItemDatabase::class.java, "todo_item_db").build()
+        Room.databaseBuilder(context, ToDoItemDatabase::class.java, "todo_item_db")
+            .fallbackToDestructiveMigration().build() //TODO check migrations
 
     @Singleton
     @Provides

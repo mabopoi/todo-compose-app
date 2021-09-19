@@ -24,13 +24,16 @@ fun HomeScreen(
     val state = viewModel.state.value
     var showDialog by remember { mutableStateOf(false) }
 
+    //DialogLambdas
     val setShowDialog = { value: Boolean -> showDialog = value }
+    val createToDo = { title: String, desc: String -> viewModel.addToDo(title, description = desc) }
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { setShowDialog(true) },
                 modifier = Modifier.offset(y = (-50).dp)
-                ) {
+            ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add icon")
             }
         },
@@ -59,10 +62,8 @@ fun HomeScreen(
                 }
             }
 
-
             if (showDialog) {
-                NewToDoDialog(setShowDialog = setShowDialog)
+                NewToDoDialog(createToDo = createToDo, setShowDialog = setShowDialog)
             }
         })
-
 }

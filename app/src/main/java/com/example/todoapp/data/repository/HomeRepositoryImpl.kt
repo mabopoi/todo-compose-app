@@ -20,4 +20,7 @@ class HomeRepositoryImpl @Inject constructor(
         return dao.delete(item)
     }
 
+    override suspend fun addToDo(item: ToDoItem): Long {
+       return dao.upsert(item)
+    }
 }
