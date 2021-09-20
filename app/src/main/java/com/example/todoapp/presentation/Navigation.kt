@@ -1,21 +1,19 @@
 package com.example.todoapp.presentation
 
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.navigation.NavBackStackEntry
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavType
+import androidx.navigation.compose.*
+import com.example.todoapp.presentation.detail.DetailScreen
 import com.example.todoapp.presentation.home.HomeScreen
+import kotlin.reflect.typeOf
 
+@ExperimentalMaterialApi
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
@@ -30,6 +28,17 @@ fun Navigation() {
                 HomeScreen { toDoItemId ->
                     navController.navigate("/detail/$toDoItemId")
                 }
+            }
+            composable(
+                route = "/detail/{id}",
+                arguments = listOf(
+                    navArgument(name = "id") {
+                        type = NavType.StringType
+                        nullable = false
+                    }
+                )
+            ) {
+                DetailScreen()
             }
         }
     }

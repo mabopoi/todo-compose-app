@@ -2,6 +2,7 @@ package com.example.todoapp.presentation.home
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -16,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.todoapp.presentation.home.components.NewToDoDialog
 import com.example.todoapp.presentation.home.components.ToDoListItem
 
+@ExperimentalMaterialApi
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
@@ -40,9 +42,9 @@ fun HomeScreen(
         content = {
             Box(modifier = Modifier.fillMaxSize()) {
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
-                    itemsIndexed(state.list) { index, toDoItem ->
+                    items(state.list) { toDoItem ->
                         ToDoListItem(toDoItem = toDoItem) {
-                            navigateToDetailScreen(index.toString())
+                            navigateToDetailScreen(toDoItem.id.toString())
                         }
                     }
                 }
