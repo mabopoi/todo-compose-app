@@ -12,10 +12,16 @@ import com.example.todoapp.domain.model.ToDoItem
 
 @ExperimentalMaterialApi
 @Composable
-fun ToDoListItem(toDoItem: ToDoItem, onClick: () -> Unit) {
+fun ToDoListItem(
+    toDoItem: ToDoItem,
+    onClick: () -> Unit,
+    onSwipe: (item: ToDoItem) -> Unit
+) {
     val dismissState = rememberDismissState()
 
-    SwipeToDismiss(state = dismissState, background = { Box(modifier = Modifier.fillMaxSize()) }){
+    if (dismissState.isDismissed(DismissDirection.StartToEnd)) onSwipe(toDoItem)
+
+    SwipeToDismiss(state = dismissState, background = { Box(modifier = Modifier.fillMaxSize()) }) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -27,7 +33,7 @@ fun ToDoListItem(toDoItem: ToDoItem, onClick: () -> Unit) {
                 Text(text = toDoItem.title)
                 Text(text = toDoItem.description)
             }
-            Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null )
+            Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null)
         }
     }
 }

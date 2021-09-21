@@ -28,7 +28,6 @@ fun HomeScreen(
 
     //DialogLambdas
     val setShowDialog = { value: Boolean -> showDialog = value }
-    val createToDo = { title: String, desc: String -> viewModel.addToDo(title, description = desc) }
 
     Scaffold(
         floatingActionButton = {
@@ -42,10 +41,12 @@ fun HomeScreen(
         content = {
             Box(modifier = Modifier.fillMaxSize()) {
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
-                    items(state.list) { toDoItem ->
-                        ToDoListItem(toDoItem = toDoItem) {
-                            navigateToDetailScreen(toDoItem.id.toString())
-                        }
+                    items(items = state.list, key = { item -> item.id!! }) { toDoItem ->
+                        ToDoListItem(
+                            toDoItem = toDoItem,
+                            onClick = { navigateToDetailScreen(toDoItem.id.toString()) },
+                            onSwipe = viewModel::deleteToDo
+                        )
                     }
                 }
                 if (state.isLoading) {
@@ -65,7 +66,7 @@ fun HomeScreen(
             }
 
             if (showDialog) {
-                NewToDoDialog(createToDo = createToDo, setShowDialog = setShowDialog)
+                NewToDoDialog(createToDo = viewModel::addToDo, setShowDialog = setShowDialog)
             }
         })
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.todoapp.common.Resource
 import com.example.todoapp.domain.model.ToDoItem
 import com.example.todoapp.domain.use_case.add_todo.AddToDoUseCase
+import com.example.todoapp.domain.use_case.delete_todo.DeleteToDoUseCase
 import com.example.todoapp.domain.use_case.get_todos.GetToDosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -18,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getToDosUseCase: GetToDosUseCase,
-    private val addToDoUseCase: AddToDoUseCase
+    private val addToDoUseCase: AddToDoUseCase,
+    private val deleteToDoUseCase: DeleteToDoUseCase
 ) : ViewModel() {
 
     private val _state =
@@ -49,7 +51,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    suspend fun deleteToDo(item: ToDoItem) {
-        TODO("Not yet implemented")
+    fun deleteToDo(item: ToDoItem) {
+        viewModelScope.launch {
+            deleteToDoUseCase(item)
+        }
     }
 }
