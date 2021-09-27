@@ -19,7 +19,7 @@ object TestAppModule {
     @Singleton
     @Provides
     fun provideFakeHomeRepository() = object : HomeRepository {
-        private val list = mutableListOf(
+        private var list = mutableListOf(
             ToDoItem(id = 1, title = "title 1", description = "test 1"),
             ToDoItem(id = 2, title = "title 2", description = "test 2"),
             ToDoItem(id = 3, title = "title 3", description = "test 3"),
@@ -31,7 +31,7 @@ object TestAppModule {
         }
 
         override suspend fun deleteToDo(item: ToDoItem) {
-           list.filter { toDoItem -> item.id != toDoItem.id }
+           list = list.filter { toDoItem -> item.id != toDoItem.id }.toMutableList()
         }
 
         override suspend fun addToDo(item: ToDoItem): Long {

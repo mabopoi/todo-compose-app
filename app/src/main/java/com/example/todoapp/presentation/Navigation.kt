@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
+import androidx.navigation.navArgument
 import com.example.todoapp.presentation.detail.DetailScreen
 import com.example.todoapp.presentation.home.HomeScreen
 import kotlin.reflect.typeOf
