@@ -6,8 +6,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.test.TestCoroutineDispatcher
 import javax.inject.Singleton
 
 @Module
@@ -27,11 +30,11 @@ object TestAppModule {
         )
 
         override fun getAllToDos(): Flow<List<ToDoItem>> {
-            return flowOf(list)
+            return flow { emit(list) }
         }
 
         override suspend fun deleteToDo(item: ToDoItem) {
-           list = list.filter { toDoItem -> item.id != toDoItem.id }.toMutableList()
+            list.remove(item)
         }
 
         override suspend fun addToDo(item: ToDoItem): Long {
@@ -46,6 +49,10 @@ object TestAppModule {
             return newItemIndex
         }
     }
+
+    @ExperimentalCoroutinesApi
+    @Singleton
+    @Provides
+    fun provideDispatcher(): CoroutineDispatcher = TestCoroutineDispatcher()
+
 }
-
-

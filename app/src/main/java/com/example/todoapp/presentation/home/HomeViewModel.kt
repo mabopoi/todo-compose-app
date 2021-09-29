@@ -10,6 +10,7 @@ import com.example.todoapp.domain.use_case.add_todo.AddToDoUseCase
 import com.example.todoapp.domain.use_case.delete_todo.DeleteToDoUseCase
 import com.example.todoapp.domain.use_case.get_todos.GetToDosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -20,19 +21,20 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getToDosUseCase: GetToDosUseCase,
     private val addToDoUseCase: AddToDoUseCase,
-    private val deleteToDoUseCase: DeleteToDoUseCase
+    private val deleteToDoUseCase: DeleteToDoUseCase,
+    private val injectedDispatcher: CoroutineDispatcher //good practice for testing
 ) : ViewModel() {
 
     private val _state =
-        mutableStateOf(HomeState()) //must change to a Model State
-    val state: State<HomeState> = _state // must change to a Model State
+        mutableStateOf(HomeState())
+    val state: State<HomeState> = _state
 
     init {
         getAllToDos()
     }
 
     private fun getAllToDos() {
-        viewModelScope.launch {
+        viewModelScope.launch(injectedDispatcher) {
             getToDosUseCase().collect { res ->
                 when (res) {
                     is Resource.Success -> res.data?.onEach { _state.value = HomeState(list = it) }
@@ -44,15 +46,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-   fun addToDo(title: String, description: String){
-       val item = ToDoItem(title = title, description = description)
-        viewModelScope.launch {
+    fun addToDo(title: String, description: String) {
+        val item = ToDoItem(title = title, description = description)
+        viewModelScope.launch(injectedDispatcher) {
             addToDoUseCase(item)
         }
     }
 
     fun deleteToDo(item: ToDoItem) {
-        viewModelScope.launch {
+        viewModelScope.launch(injectedDispatcher) {
             deleteToDoUseCase(item)
         }
     }
