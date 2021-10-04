@@ -10,6 +10,8 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
+import com.example.todoapp.common.Constants
 import com.example.todoapp.presentation.detail.DetailScreen
 import com.example.todoapp.presentation.home.HomeScreen
 import kotlin.reflect.typeOf
@@ -34,12 +36,17 @@ fun Navigation() {
                 route = "/detail/{id}",
                 arguments = listOf(
                     navArgument(name = "id") {
-                        type = NavType.StringType
+                        type = NavType.LongType
                         nullable = false
+                    }
+                ),
+                deepLinks = listOf(
+                    navDeepLink {
+                        uriPattern = "${Constants.notificationUrl}/{id}"
                     }
                 )
             ) {
-                DetailScreen()
+                DetailScreen(toDoItemId = it.arguments!!.getLong("id"))
             }
         }
     }

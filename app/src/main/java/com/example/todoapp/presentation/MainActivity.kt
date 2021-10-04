@@ -25,13 +25,6 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
 
-@ExperimentalMaterialApi
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    TodoAppTheme {
-        Navigation()
-    }
+
 }
