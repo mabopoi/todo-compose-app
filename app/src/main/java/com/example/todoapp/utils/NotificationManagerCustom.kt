@@ -10,6 +10,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.net.toUri
+import com.example.todoapp.R
 import com.example.todoapp.common.Constants
 import com.example.todoapp.common.Constants.channelId
 import com.example.todoapp.presentation.MainActivity
@@ -46,6 +47,7 @@ object NotificationManagerCustom {
         }
 
         val notification = NotificationCompat.Builder(context, channelId)
+            .setSmallIcon(R.drawable.ic_baseline_done_24)
             .setContentTitle("An item has been added")
             .setContentText("Go and check it!")
             .setContentIntent(pending)

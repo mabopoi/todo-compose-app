@@ -14,7 +14,6 @@ import androidx.navigation.navDeepLink
 import com.example.todoapp.common.Constants
 import com.example.todoapp.presentation.detail.DetailScreen
 import com.example.todoapp.presentation.home.HomeScreen
-import kotlin.reflect.typeOf
 
 @ExperimentalMaterialApi
 @Composable

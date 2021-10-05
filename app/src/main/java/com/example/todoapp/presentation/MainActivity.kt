@@ -9,6 +9,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.todoapp.presentation.ui.theme.TodoAppTheme
+import com.example.todoapp.utils.NotificationManagerCustom
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,6 +17,7 @@ class MainActivity : ComponentActivity() {
     @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        NotificationManagerCustom.createNotificationChannel(this)
         setContent {
             TodoAppTheme {
                 // A surface container using the 'background' color from the theme
@@ -25,6 +27,4 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
-
 }

@@ -7,8 +7,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.example.todoapp.utils.NotificationManagerCustom
 
 @Composable
 fun NewToDoDialog(
@@ -17,6 +19,8 @@ fun NewToDoDialog(
 ) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
+
+    val context = LocalContext.current
 
     Dialog(
         onDismissRequest = { setShowDialog(false) },
@@ -49,6 +53,7 @@ fun NewToDoDialog(
                         setShowDialog(false)
                         title = ""
                         description = ""
+                        NotificationManagerCustom.showNewItemNotification(1, context)
                     }) {
                         Text(text = "Agregar")
                     }
