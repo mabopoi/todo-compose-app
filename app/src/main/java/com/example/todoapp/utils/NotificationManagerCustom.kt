@@ -52,7 +52,9 @@ object NotificationManagerCustom {
             .setContentText("Go and check it!")
             .setContentIntent(pending)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setAutoCancel(true)
             .build()
+
         val notificationId = (1..999).random()
 
         notificationManager?.notify(notificationId, notification)

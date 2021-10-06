@@ -1,5 +1,6 @@
 package com.example.todoapp.presentation.home.components
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -14,7 +15,7 @@ import com.example.todoapp.utils.NotificationManagerCustom
 
 @Composable
 fun NewToDoDialog(
-    createToDo: (title: String, desc: String) -> Unit,
+    createToDo: (title: String, desc: String, context: Context) -> Unit,
     setShowDialog: (Boolean) -> Unit
 ) {
     var title by remember { mutableStateOf("") }
@@ -49,11 +50,10 @@ fun NewToDoDialog(
                         Text(text = "Cancelar")
                     }
                     Button(onClick = {
-                        createToDo(title, description)
+                        createToDo(title, description, context)
                         setShowDialog(false)
                         title = ""
                         description = ""
-                        NotificationManagerCustom.showNewItemNotification(1, context)
                     }) {
                         Text(text = "Agregar")
                     }
