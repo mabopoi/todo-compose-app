@@ -8,12 +8,11 @@ import javax.inject.Inject
 class AddToDoUseCase @Inject constructor(
     private val repository: HomeRepository
 ) {
-    suspend operator fun invoke(item: ToDoItem): Boolean {
-        try {
+    suspend operator fun invoke(item: ToDoItem): Long? {
+        return try {
             repository.addToDo(item)
         } catch (e: Exception) {
-            return false
+            return null
         }
-        return true
     }
 }

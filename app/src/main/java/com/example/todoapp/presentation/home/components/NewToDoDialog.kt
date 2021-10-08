@@ -1,5 +1,6 @@
 package com.example.todoapp.presentation.home.components
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -7,16 +8,20 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.example.todoapp.utils.NotificationManagerCustom
 
 @Composable
 fun NewToDoDialog(
-    createToDo: (title: String, desc: String) -> Unit,
+    createToDo: (title: String, desc: String, context: Context) -> Unit,
     setShowDialog: (Boolean) -> Unit
 ) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
+
+    val context = LocalContext.current
 
     Dialog(
         onDismissRequest = { setShowDialog(false) },
@@ -45,7 +50,7 @@ fun NewToDoDialog(
                         Text(text = "Cancelar")
                     }
                     Button(onClick = {
-                        createToDo(title, description)
+                        createToDo(title, description, context)
                         setShowDialog(false)
                         title = ""
                         description = ""

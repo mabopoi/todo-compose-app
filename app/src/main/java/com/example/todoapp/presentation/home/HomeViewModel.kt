@@ -1,5 +1,6 @@
 package com.example.todoapp.presentation.home
 
+import android.content.Context
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -9,6 +10,7 @@ import com.example.todoapp.domain.model.ToDoItem
 import com.example.todoapp.domain.use_case.add_todo.AddToDoUseCase
 import com.example.todoapp.domain.use_case.delete_todo.DeleteToDoUseCase
 import com.example.todoapp.domain.use_case.get_todos.GetToDosUseCase
+import com.example.todoapp.utils.NotificationManagerCustom
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.collect
@@ -46,10 +48,12 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun addToDo(title: String, description: String) {
+    fun addToDo(title: String, description: String, context: Context) {
         val item = ToDoItem(title = title, description = description)
         viewModelScope.launch(injectedDispatcher) {
-            addToDoUseCase(item)
+            val newItemId = addToDoUseCase(item)
+            if (newItemId != null)
+                NotificationManagerCustom.showNewItemNotification(newItemId, context)
         }
     }
 
