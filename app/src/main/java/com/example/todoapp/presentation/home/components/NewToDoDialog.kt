@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.example.todoapp.common.Times
 import com.example.todoapp.utils.NotificationManagerCustom
 
 @Composable
@@ -20,6 +21,8 @@ fun NewToDoDialog(
 ) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
+    var timeAmount by remember { mutableStateOf("1") }
+    var selectedTime by remember { mutableStateOf(Times.Minutes) }
 
     val context = LocalContext.current
 
@@ -40,6 +43,17 @@ fun NewToDoDialog(
                     value = description,
                     onValueChange = { value -> description = value })
                 Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = "Remember me in:")
+                    TimeSelector(
+                        timeAmount = timeAmount,
+                        selectedTime = selectedTime,
+                        setTimeAmount = { timeAmount = it },
+                        setSelectedTime = { selectedTime = it })
+                }
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 16.dp),
@@ -47,15 +61,13 @@ fun NewToDoDialog(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Button(onClick = { setShowDialog(false) }) {
-                        Text(text = "Cancelar")
+                        Text(text = "Go back")
                     }
                     Button(onClick = {
                         createToDo(title, description, context)
                         setShowDialog(false)
-                        title = ""
-                        description = ""
                     }) {
-                        Text(text = "Agregar")
+                        Text(text = "Add")
                     }
                 }
             }
