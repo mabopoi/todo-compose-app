@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todoapp.common.Resource
+import com.example.todoapp.common.Times
 import com.example.todoapp.domain.model.ToDoItem
 import com.example.todoapp.domain.use_case.add_todo.AddToDoUseCase
 import com.example.todoapp.domain.use_case.delete_todo.DeleteToDoUseCase
@@ -48,8 +49,18 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun addToDo(title: String, description: String, context: Context) {
-        val item = ToDoItem(title = title, description = description)
+    fun addToDo(
+        title: String,
+        description: String,
+        context: Context,
+        timeAmount: String,
+        time: Times
+    ) {
+        val formattedTimeAmount = timeAmount.replace(Regex("[, ./]"), "").toLong()
+
+        val rememberTime = System.currentTimeMillis() + formattedTimeAmount * time.valueInMilis
+
+        val item = ToDoItem(title = title, description = description, rememberTime = rememberTime)
         viewModelScope.launch(injectedDispatcher) {
             val newItemId = addToDoUseCase(item)
             if (newItemId != null)

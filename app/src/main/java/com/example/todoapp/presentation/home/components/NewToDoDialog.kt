@@ -3,12 +3,14 @@ package com.example.todoapp.presentation.home.components
 import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.todoapp.common.Times
@@ -16,7 +18,7 @@ import com.example.todoapp.utils.NotificationManagerCustom
 
 @Composable
 fun NewToDoDialog(
-    createToDo: (title: String, desc: String, context: Context) -> Unit,
+    createToDo: (title: String, desc: String, context: Context, timeAmount: String, time: Times) -> Unit,
     setShowDialog: (Boolean) -> Unit
 ) {
     var title by remember { mutableStateOf("") }
@@ -37,11 +39,19 @@ fun NewToDoDialog(
                 TextField(
                     modifier = Modifier.fillMaxWidth(),
                     value = title,
-                    onValueChange = { value -> title = value })
+                    onValueChange = { value -> title = value },
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next
+                    )
+                )
                 TextField(
                     modifier = Modifier.fillMaxWidth(),
                     value = description,
-                    onValueChange = { value -> description = value })
+                    onValueChange = { value -> description = value },
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next
+                    )
+                )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
@@ -51,7 +61,11 @@ fun NewToDoDialog(
                         timeAmount = timeAmount,
                         selectedTime = selectedTime,
                         setTimeAmount = { timeAmount = it },
-                        setSelectedTime = { selectedTime = it })
+                        setSelectedTime = { selectedTime = it },
+                        onEnterPressed = {
+                            createToDo(title, description, context, timeAmount, selectedTime)
+                            setShowDialog(false)
+                        })
                 }
                 Row(
                     modifier = Modifier
@@ -64,7 +78,7 @@ fun NewToDoDialog(
                         Text(text = "Go back")
                     }
                     Button(onClick = {
-                        createToDo(title, description, context)
+                        createToDo(title, description, context, timeAmount, selectedTime)
                         setShowDialog(false)
                     }) {
                         Text(text = "Add")
