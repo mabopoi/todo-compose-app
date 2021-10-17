@@ -4,6 +4,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.navigation.NavBackStackEntry
@@ -15,6 +16,7 @@ import com.example.todoapp.common.Constants
 import com.example.todoapp.presentation.detail.DetailScreen
 import com.example.todoapp.presentation.home.HomeScreen
 
+@ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @Composable
 fun Navigation() {

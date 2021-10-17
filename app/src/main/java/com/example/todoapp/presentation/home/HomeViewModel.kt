@@ -56,15 +56,16 @@ class HomeViewModel @Inject constructor(
         timeAmount: String,
         time: Times
     ) {
-        val formattedTimeAmount = timeAmount.replace(Regex("[, ./]"), "").toLong()
+        val formattedTimeAmount = timeAmount.replace(Regex("[, ./-]"), "").toLong()
 
         val rememberTime = System.currentTimeMillis() + formattedTimeAmount * time.valueInMilis
 
         val item = ToDoItem(title = title, description = description, rememberTime = rememberTime)
         viewModelScope.launch(injectedDispatcher) {
             val newItemId = addToDoUseCase(item)
-            if (newItemId != null)
-                NotificationManagerCustom.showNewItemNotification(newItemId, context)
+            if (newItemId != null) {
+                NotificationManagerCustom.setAlarm(newItemId, rememberTime, context)
+            }
         }
     }
 
