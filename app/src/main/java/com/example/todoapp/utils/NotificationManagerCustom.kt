@@ -1,9 +1,6 @@
 package com.example.todoapp.utils
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.app.TaskStackBuilder
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -48,7 +45,7 @@ object NotificationManagerCustom {
 
         val notification = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.ic_baseline_done_24)
-            .setContentTitle("An item has been added")
+            .setContentTitle("Oh! You have something to do!")
             .setContentText("Go and check it!")
             .setContentIntent(pending)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -59,5 +56,15 @@ object NotificationManagerCustom {
 
         notificationManager?.notify(notificationId, notification)
 
+    }
+
+    fun setAlarm(itemId: Long, rememberTime: Long, context: Context) {
+        val intent = Intent(context, ReminderBroadcastReceiver::class.java)
+        intent.putExtra("itemId", itemId)
+
+        val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
+        val alarmManager = getSystemService(context, AlarmManager::class.java)
+
+        alarmManager?.set(AlarmManager.RTC_WAKEUP, rememberTime, pendingIntent)
     }
 }
